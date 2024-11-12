@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="./img/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./fonts/font.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+	/* เพิ่ม CSS สำหรับการวางปุ่ม show/hide ให้อยู่ในตำแหน่งที่เหมาะสม */
+	.password-container {
+		position: relative;
+		width: 100%;
+	}
+
+	.toggle-password-btn {
+		position: absolute;
+		right: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+		background: none;
+		border: none;
+		cursor: pointer;
+		color: #b7b9bb;
+		font-size: 1.2em;
+	}
+</style>
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-form-title" style="background-image: url(img/office.jpg);">
+					<span class="mitr-semibold">
+						ระบบบริหารจัดการฟาร์ม
+					</span>
+				</div>
+
+				<form class="login100-form validate-form" id="form">
+					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+						<span class="label-input100">Username</span>
+						<input class="input100" type="text" id="username" name="username" placeholder="Enter username">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+						<span class="label-input100">Password</span>
+						<input class="input100" type="password" id="password" name="password" placeholder="Enter password">
+						<button type="button" class="toggle-password-btn" onclick="togglePassword()">
+							<i id="password-icon" class="fas fa-eye"></i>
+						</button>
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="flex-sb-m w-full p-b-30">
+						<div class="contact100-form-checkbox">
+							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+							<label class="label-checkbox100" for="ckb1">
+								Remember me
+							</label>
+						</div>
+
+						<div>
+							<a href="#" class="txt1">
+								Forgot Password?
+							</a>
+						</div>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" type="submit">
+							Login
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const passwordIcon = document.getElementById("password-icon");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                passwordIcon.classList.remove("fa-eye");
+                passwordIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                passwordIcon.classList.remove("fa-eye-slash");
+                passwordIcon.classList.add("fa-eye");
+            }
+        }
+
+    </script>
+	<script src="js/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+<!--===============================================================================================-->
+	<script src="./js/jquery-3.7.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+	<script src="./login.js"></script>
+
+</body>
+</html>

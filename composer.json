@@ -1,0 +1,16 @@
+{
+    "name": "mpdf/mpdf",
+    "require": {
+        "mpdf/mpdf": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mpdf\\Mpdf\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Suppachai Maoklang"
+        }
+    ]
+}
