@@ -50,7 +50,7 @@
 <li class="nav-item">
     <a class="nav-link" href="import.php">
         <i class="fas fa-fw fa-download"></i>
-        <span>บันทึกข้อมูลไก่เข้า</span></a>
+        <span>บันทึกข้อมูลนำเข้าไก่</span></a>
 </li>
 
 <!-- Nav Item - Tables -->
