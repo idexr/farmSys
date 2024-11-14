@@ -1,10 +1,5 @@
 <?php
-    session_start();
-
-    if(!isset($_SESSION['username'])){
-        header("location:login.html");
-        exit();
-    }
+include 'checkSession.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,15 +27,15 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    
+
     <script src="./js/jquery-3.7.1.min.js"></script>
 
     <style>
-        .btn-sd:hover{
-            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        .btn-sd:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
         .action-buttons {
@@ -50,7 +45,8 @@
         }
 
         .action-buttons button {
-            margin: 0 5px; /* กำหนดระยะห่างระหว่างปุ่ม */
+            margin: 0 5px;
+            /* กำหนดระยะห่างระหว่างปุ่ม */
         }
 
         th {
@@ -70,7 +66,8 @@
         }
 
         th.twenty-col {
-            width: 20%; /* คอลัมน์ Actions */
+            width: 20%;
+            /* คอลัมน์ Actions */
         }
     </style>
 
@@ -82,7 +79,7 @@
     <div id="wrapper">
 
         <?php
-            require_once 'sidebar.php';
+        require_once 'sidebar.php';
         ?>
 
         <!-- Content Wrapper -->
@@ -311,7 +308,7 @@
                         <!-- Area Chart -->
                         <div class="col-xl-12 col-lg-7">
                             <div class="card shadow mb-4">
-                                
+
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -384,13 +381,13 @@
                                 <label for="breedDropdown">สายพันธุ์</label>
                                 <select class="form-select" id="breedDropdown" name="breedDropdown">
                                     <option value="">เลือกสายพันธุ์ไก่</option>
-                                </select> 
+                                </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 mt-3">
                                 <label for="chickenQTY">จำนวน</label>
-                                <input type="text" class="form-control" id="chickenQTY" placeholder="" name="chickenQTY"> 
+                                <input type="text" class="form-control" id="chickenQTY" placeholder="" name="chickenQTY">
                             </div>
                             <div class="col-sm-6 mt-3">
                                 <label for="price">ราคา</label>
@@ -429,13 +426,13 @@
                                 <label for="editBreed">สายพันธุ์</label>
                                 <select class="form-select" id="editBreed" name="editBreed">
                                     <option value="">เลือกสายพันธุ์ไก่</option>
-                                </select> 
+                                </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 mt-3">
                                 <label for="editQTY">จำนวน</label>
-                                <input type="text" class="form-control" id="editQTY" placeholder="" name="editQTY"> 
+                                <input type="text" class="form-control" id="editQTY" placeholder="" name="editQTY">
                             </div>
                             <div class="col-sm-6 mt-3">
                                 <label for="editPrice">ราคา</label>
@@ -460,7 +457,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span class="close" onclick="closeModal('editModalChicken')">&times;</span>
+                        <span class="close" onclick="closeModal('editModalChicken')">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -476,44 +473,53 @@
         $(document).ready(function() {
             var table = $('#chickenTable').DataTable({
                 "ajax": {
-                    "url": "get_import.php",  // เรียกใช้ PHP ที่ดึงข้อมูล
-                    "dataSrc": ""                 // กำหนด data source เป็น empty string สำหรับ JSON แบบ array
+                    "url": "get_import.php", // เรียกใช้ PHP ที่ดึงข้อมูล
+                    "dataSrc": "" // กำหนด data source เป็น empty string สำหรับ JSON แบบ array
                 },
-                "columns": [
-                    { "data": "importID" },
-                    { "data": "breedName" },
-                    { "data": "importQTY" },
-                    { "data": "importPrice" },
-                    { "data": "importDate" },
+                "columns": [{
+                        "data": "importID"
+                    },
                     {
-                        "data": null,  // คอลัมน์นี้ไม่มีข้อมูลในฐานข้อมูล
-                        "render": function (data, type, row) {
+                        "data": "breedName"
+                    },
+                    {
+                        "data": "importQTY"
+                    },
+                    {
+                        "data": "importPrice"
+                    },
+                    {
+                        "data": "importDate"
+                    },
+                    {
+                        "data": null, // คอลัมน์นี้ไม่มีข้อมูลในฐานข้อมูล
+                        "render": function(data, type, row) {
                             return '<div class="action-buttons">' +
-                                    '<button class="edit-btn btn btn-warning shadow-sm" ' + 
-                                    'data-id="' + row.importID + '" ' +
-                                    'data-breed="' + row.breedID + '" ' +
-                                    'data-qty="' + row.importQTY + '" ' +
-                                    'data-price="' + row.importPrice + '" ' +
-                                    'data-date="' + row.importDate + '"><i class="far fa-edit"></i></button>' +
-                                    ' <button class="del-btn btn btn-danger shadow-sm" data-id="' + row.importID + '"><i class="far fa-trash-alt"></i></button>' +
-                                    '</div>';
+                                '<button class="edit-btn btn btn-warning shadow-sm" ' +
+                                'data-id="' + row.importID + '" ' +
+                                'data-breed="' + row.breedID + '" ' +
+                                'data-qty="' + row.importQTY + '" ' +
+                                'data-price="' + row.importPrice + '" ' +
+                                'data-date="' + row.importDate + '"><i class="far fa-edit"></i></button>' +
+                                ' <button class="del-btn btn btn-danger shadow-sm" data-id="' + row.importID + '"><i class="far fa-trash-alt"></i></button>' +
+                                '</div>';
                         }
                     }
                 ]
             });
         });
 
-        function clearText(){
+        function clearText() {
             event.preventDefault();
             $('input[type="text"]').val('');
             $('select').prop('selectedIndex', 0);
             $('input[type="date"]').val('');
         }
-        
+
         function closeModal(modalId) {
             $('#' + modalId).modal('hide');
         }
-    
+
         $(document).ready(function() {
             // เปิด modal เมื่อคลิกปุ่ม "Add New Cause"
             $('#addBtn').on('click', function() {
@@ -539,15 +545,15 @@
                         console.log(response);
                         if (response.status === 'success') {
                             Swal.fire('Success!', response.message, 'success').then(() => {
-                                $('#addModal').modal('hide');  // ปิด modal
+                                $('#addModal').modal('hide'); // ปิด modal
                                 $('#addForm')[0].reset();
-                                $('#chickenTable').DataTable().ajax.reload(null, false);  // รีเฟรช DataTable
+                                $('#chickenTable').DataTable().ajax.reload(null, false); // รีเฟรช DataTable
                             });
                         } else {
                             Swal.fire('Error!', response.message, 'error');
                         }
                     },
-                    error: function(xhr, status, error) {  // เพิ่ม parameter xhr ในฟังก์ชัน error
+                    error: function(xhr, status, error) { // เพิ่ม parameter xhr ในฟังก์ชัน error
                         Swal.fire('Error!', 'An error occurred while adding the record: ' + xhr.responseText, 'error');
                     }
                 });
@@ -571,7 +577,7 @@
 
         });
 
-        
+
 
         ///ส่วนแก้ไข
         $(document).ready(function() {
@@ -621,12 +627,13 @@
 
                 // ดึงข้อมูลที่แก้ไขจากฟอร์ม
                 var formData = {
-                    id: $('#editId').val(),
-                    chicken: $('#editBreed').val(),
-                    chickenF: $('#editQTY').val(),
+                    importID: $('#editId').val(),
+                    breed: $('#editBreed').val(),
+                    qty: $('#editQTY').val(),
                     price: $('#editPrice').val(),
                     inputDate: $('#editDate').val()
                 };
+                console.log(formData);
 
                 // ส่งข้อมูลไปยังเซิร์ฟเวอร์เพื่อบันทึกการแก้ไข
                 $.ajax({
@@ -637,9 +644,9 @@
                         console.log(response.message);
                         if (response.status === 'success') {
                             Swal.fire('Success!', response.message, 'success').then(() => {
-                                        $('#editModalChicken').modal('hide'); // ปิด Modal
-                                        $('#chickenTable').DataTable().ajax.reload(null, false);
-                                    });
+                                $('#editModalChicken').modal('hide'); // ปิด Modal
+                                $('#chickenTable').DataTable().ajax.reload(null, false);
+                            });
                         } else {
                             Swal.fire('Error!', response.message, 'error');
                         }
@@ -666,7 +673,9 @@
                             url: 'imp_del.php',
                             type: 'POST',
                             dataType: 'json',
-                            data: { id: id },
+                            data: {
+                                id: id
+                            },
                             success: function(response) {
                                 if (response.status === 'success') {
                                     Swal.fire('Success!', response.message, 'success').then(() => {
@@ -677,7 +686,7 @@
                                 }
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                console.error("Error details: ", textStatus, errorThrown);  // ตรวจสอบรายละเอียดข้อผิดพลาด
+                                console.error("Error details: ", textStatus, errorThrown); // ตรวจสอบรายละเอียดข้อผิดพลาด
                                 Swal.fire('Error!', 'An error occurred while deleting the record.', 'error');
                             }
                         });
@@ -686,9 +695,8 @@
             });
 
         });
-        
     </script>
-    
+
     <script src="js/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="css/sweetalert2.min.css">
 
@@ -709,7 +717,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-   
+
 
 </body>
 

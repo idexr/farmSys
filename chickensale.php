@@ -1,10 +1,5 @@
 <?php
-    session_start();
-
-    if(!isset($_SESSION['username'])){
-        header("location:login.html");
-        exit();
-    }
+include 'checkSession.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,12 +30,12 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    
+
     <script src="./js/jquery-3.7.1.min.js"></script>
 
     <style>
-        .btn-sd:hover{
-            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        .btn-sd:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
         .action-buttons {
@@ -50,7 +45,8 @@
         }
 
         .action-buttons button {
-            margin: 0 5px; /* กำหนดระยะห่างระหว่างปุ่ม */
+            margin: 0 5px;
+            /* กำหนดระยะห่างระหว่างปุ่ม */
         }
 
         th.ten-col {
@@ -62,7 +58,8 @@
         }
 
         th.twenty-col {
-            width: 20%; /* คอลัมน์ Actions */
+            width: 20%;
+            /* คอลัมน์ Actions */
         }
     </style>
 
@@ -74,7 +71,7 @@
     <div id="wrapper">
 
         <?php
-            require_once 'sidebar.php';
+        require_once 'sidebar.php';
         ?>
 
         <!-- Content Wrapper -->
@@ -292,7 +289,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">บันทึกข้อมูลไก่คัดทิ้ง</h1>
+                        <h1 class="h3 mb-0 text-gray-800">บันทึกข้อมูลขายไก่</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" id="addBtn">
                             <i class="fas fa-plus fa-sm text-white-50"></i> เพิ่มข้อมูล
                         </a>
@@ -303,22 +300,22 @@
                         <!-- Area Chart -->
                         <div class="col-xl-12 col-lg-7">
                             <div class="card shadow mb-4">
-                                
+
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="sortTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" id="saleTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th class="ten-col">พันธุ์ไก่</th>
                                                     <th class="ten-col">ฟาร์ม</th>
                                                     <th class="ten-col">เล้า</th>
-                                                    <th class="ten-col">จำนวนตัวเมียที่คัดทิ้ง</th>
-                                                    <th class="ten-col">จำนวนตัวผู้ที่คัดทิ้ง</th>
-                                                    <th class="ten-col">สาเหตุที่คัดทิ้ง</th>
+                                                    <th class="ten-col">จำนวนตัวเมียที่ขาย</th>
+                                                    <th class="ten-col">จำนวนตัวผู้ที่ขาย</th>
+                                                    <th class="ten-col">หมายเหตุ</th>
+                                                    <th class="ten-col">ราคา</th>
                                                     <th class="ten-col">วันที่บันทึก</th>
-                                                    <th class="ten-col">เวลาที่บันทึก</th>
-                                                    <th class="twenty-col">ดำเนินการ</th>
+                                                    <th class="ten-col">ดำเนินการ</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -363,7 +360,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">บันทึกข้อมูลคัดทิ้ง</h5>
+                    <h5 class="modal-title" id="addModalLabel">บันทึกข้อมูลขาย</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span class="close" onclick="closeModal('addModal')">&times;</span>
                     </button>
@@ -375,7 +372,7 @@
                                 <label for="farmDropdown">ฟาร์ม</label>
                                 <select class="form-select" id="farmDropdown" name="farmDropdown">
                                     <option value="">เลือกฟาร์ม</option>
-                                </select> 
+                                </select>
                             </div>
                             <div class="col-sm-4 mt-3">
                                 <label for="coopDropdown">เล้าที่</label>
@@ -388,28 +385,33 @@
                                 <input type="date" class="form-control" id="inputDate" placeholder="" name="inputDate">
                             </div>
                         </div>
+
                         <div class="row">
-                            <div class="col-sm-2 mt-5">
-                                <label for="sort_f">จำนวนตัวเมียที่คัดทิ้ง</label>
-                                <input type="text" class="form-control" id="sort_f" placeholder="" name="sort_f">
+                            <div class="col-sm-4 mt-3">
+                                <label for="sale_f">จำนวนตัวเมียที่ขาย</label>
+                                <input type="text" class="form-control" id="sale_f" placeholder="" name="sale_f">
                             </div>
-                            <div class="col-sm-2 mt-5">
-                                <label for="sort_m">จำนวนตัวผู้ที่คัดทิ้ง</label>
-                                <input type="text" class="form-control" id="sort_m" placeholder="" name="sort_m">
+                            <div class="col-sm-4 mt-3">
+                                <label for="sale_m">จำนวนตัวผู้ที่ขาย</label>
+                                <input type="text" class="form-control" id="sale_m" placeholder="" name="sale_m">
                             </div>
-                            <div class="col-sm-2 mt-5">
-                                <label for="sort">จำนวนที่คัดทิ้งทั้งหมด</label>
-                                <input type="cause" class="form-control" id="sort" placeholder="" name="sort" readonly>
+                            <div class="col-sm-4 mt-3">
+                                <label for="sale">จำนวนที่ขายทั้งหมด</label>
+                                <input type="cause" class="form-control" id="sale" placeholder="" name="sale" readonly>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4 mt-3">
-                                <label for="sortDropdown">สาเหตุที่คัดทิ้ง</label>
-                                <select class="form-select" id="sortDropdown" name="sortDropdown">
-                                    <option value="">เลือกสาเหตุที่คัดทิ้ง</option>
-                                </select> 
+                                <label for="price">ราคา</label>
+                                <input type="text" class="form-control" id="price" placeholder="" name="price">
                             </div>
-                        </div>  
+                            <div class="col-sm-4 mt-3">
+                                <label for="saleDropdown">หมายเหตุ</label>
+                                <select class="form-select" id="saleDropdown" name="saleDropdown">
+                                    <option value="">เลือกหมายเหตุ</option>
+                                </select>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -421,13 +423,13 @@
     </div>
 
     <!-- Bootstrap Modal สำหรับการแก้ไขข้อมูล ตารางตาย -->
-    <div class="modal fade" id="editModalSort" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModalLabel">แก้ไขข้อมูลคัดทิ้ง</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span class="close" onclick="closeModal('editModalSort')">&times;</span>
+                        <span class="close" onclick="closeModal('editModal')">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -435,42 +437,46 @@
                         <input type="hidden" id="editId">
                         <div class="row">
                             <div class="col-sm-4 mt-3">
-                                <label for="editFarmS">ฟาร์ม</label>
-                                <select class="form-select" id="editFarmS" name="editFarmS">
+                                <label for="editFarm">ฟาร์ม</label>
+                                <select class="form-select" id="editFarm" name="editFarm">
                                     <option value="">เลือกฟาร์ม</option>
-                                </select> 
+                                </select>
                             </div>
                             <div class="col-sm-4 mt-3">
-                                <label for="editCoopS">เล้าที่</label>
-                                <select class="form-select" id="editCoopS" name="editCoopS">
+                                <label for="editCoop">เล้าที่</label>
+                                <select class="form-select" id="editCoop" name="editCoop">
                                     <option value="">เลือกเล้า</option>
                                 </select>
                             </div>
                             <div class="col-sm-4 mt-3">
-                                <label for="editDateS">วันที่</label>
-                                <input type="date" class="form-control" id="editDateS" placeholder="" name="editDateS">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-2 mt-5">
-                                <label for="editSortF">จำนวนตัวเมียที่คัดทิ้ง</label>
-                                <input type="text" class="form-control" id="editSortF" placeholder="" name="editSortF">
-                            </div>
-                            <div class="col-sm-2 mt-5">
-                                <label for="editSortM">จำนวนตัวผู้ที่คัดทิ้ง</label>
-                                <input type="text" class="form-control" id="editSortM" placeholder="" name="editSortM"> 
-                            </div>
-                            <div class="col-sm-2 mt-5">
-                                <label for="totalSort">จำนวนที่คัดทิ้งทั้งหมด</label>
-                                <input type="text" class="form-control" id="totalSort" placeholder="" name="totalSort" readonly> 
+                                <label for="editDate">วันที่</label>
+                                <input type="date" class="form-control" id="editDate" placeholder="" name="editDate">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4 mt-3">
-                                <label for="editTypeS">สาเหตุที่คัดทิ้ง</label>
-                                <select class="form-select" id="editTypeS" name="editTypeS">
-                                    <option value="">เลือกสาเหตุที่คัดทิ้ง</option>
-                                </select> 
+                                <label for="editF">จำนวนตัวเมียที่ขาย</label>
+                                <input type="text" class="form-control" id="editF" placeholder="" name="editF">
+                            </div>
+                            <div class="col-sm-4 mt-3">
+                                <label for="editM">จำนวนตัวผู้ที่ขาย</label>
+                                <input type="text" class="form-control" id="editM" placeholder="" name="editM">
+                            </div>
+                            <div class="col-sm-4 mt-3">
+                                <label for="sum">จำนวนที่ขายทั้งหมด</label>
+                                <input type="text" class="form-control" id="sum" placeholder="" name="sum" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 mt-3">
+                                <label for="editPrice">ราคา</label>
+                                <input type="text" class="form-control" id="editPrice" placeholder="" name="editPrice">
+                            </div>
+                            <div class="col-sm-4 mt-3">
+                                <label for="editType">หมายเหตุ</label>
+                                <select class="form-select" id="editType" name="editType">
+                                    <option value="">เลือกหมายเหตุ</option>
+                                </select>
                             </div>
                         </div>
                     </form>
@@ -505,103 +511,53 @@
 
     <script>
         $(document).ready(function() {
-            // เปิด modal เมื่อคลิกปุ่ม "Add New Cause"
-            $('#addBtn').on('click', function() {
-                $('#addModal').modal('show');
-            });
-
-            // เมื่อผู้ใช้คลิกปุ่มบันทึกใน modal (บันทึกข้อมูลใหม่)
-            $('#saveAddBtn').on('click', function() {
-                var formData = {
-                    farm: $('#farmDropdown').val(),
-                    coop: $('#coopDropdown').val(),
-                    dead_f: $('#dead_f').val(),
-                    dead_m: $('#dead_m').val(),
-                    sort_f: $('#sort_f').val(),
-                    sort_m: $('#sort_m').val(),
-                    sort: $('#sortDropdown').val(),
-                    dead: $('#deadDropdown').val(),
-                    inputDate: $('#inputDate').val()
-                };
-
-                // ส่งข้อมูลด้วย AJAX
-                $.ajax({
-                    url: 'chickensort_add.php',  // PHP ที่จัดการการเพิ่มข้อมูล
-                    type: 'POST',
-                    dataType: 'json',
-                    data: formData,
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            Swal.fire('Success!', response.message, 'success').then(() => {
-                                $('#addModal').modal('hide');  // ปิด modal
-                                $('input[type="text"]').val(''); // เคลียร์ textbox ทั้งหมด
-                                $('select').prop('selectedIndex', 0); // รีเซ็ต dropdown ทั้งหมดกลับเป็นค่าแรก
-                                $('input[type="date"]').val('');
-                                $('#sortTable').DataTable().ajax.reload(null, false);  // รีเฟรช DataTable
-                            });
-                        } else {
-                            Swal.fire('Error!', response.message, 'error');
-                        }
+            var table = $('#saleTable').DataTable({
+                "ajax": {
+                    "url": "get_sale.php", // เรียกใช้ PHP ที่ดึงข้อมูล
+                    "dataSrc": "" // กำหนด data source เป็น empty string สำหรับ JSON แบบ array
+                },
+                "columns": [{
+                        "data": "breedName"
                     },
-                    error: function(xhr, status, error) {  // เพิ่ม parameter xhr ในฟังก์ชัน error
-                        Swal.fire('Error!', 'An error occurred while adding the record: ' + xhr.responseText, 'error');
+                    {
+                        "data": "FarmName"
+                    },
+                    {
+                        "data": "CoopName"
+                    },
+                    {
+                        "data": "SaleF"
+                    },
+                    {
+                        "data": "SaleM"
+                    },
+                    {
+                        "data": "SaleTypeName"
+                    },
+                    {
+                        "data": "SalePrice"
+                    },
+                    {
+                        "data": "SaleDate"
+                    },
+                    {
+                        "data": null, // คอลัมน์นี้ไม่มีข้อมูลในฐานข้อมูล
+                        "render": function(data, type, row) {
+                            return '<div class="action-buttons">' +
+                                '<button class="edit-btn btn btn-warning shadow-sm" ' +
+                                'data-id="' + row.SaleID + '" ' +
+                                'data-farm="' + row.FarmID + '" ' +
+                                'data-coop="' + row.CoopID + '" ' +
+                                'data-saleF="' + row.SaleF + '" ' +
+                                'data-saleM="' + row.SaleM + '" ' +
+                                'data-price="' + row.SalePrice + '" ' +
+                                'data-type="' + row.SaleTypeID + '" ' +
+                                'data-date="' + row.SaleDate + '"><i class="far fa-edit"></i></button>' +
+                                ' <button class="del-btn btn btn-danger shadow-sm" data-id="' + row.SaleID + '"><i class="far fa-trash-alt"></i></button>' +
+                                '</div>';
+                        }
                     }
-                });
-            });
-        });
-
-        $(document).ready(function() {
-            // ทำการเรียกข้อมูลหมวดหมู่ผ่าน AJAX
-            $.ajax({
-                url: 'get_farm.php', // ไฟล์ PHP ที่ดึงข้อมูลจากฐานข้อมูล
-                type: 'GET',
-                dataType: 'json', // คาดหวังข้อมูลในรูปแบบ JSON
-                success: function(response) {
-                    //console.log(response);
-                    // ลูปข้อมูลที่ได้จาก AJAX เพื่อเพิ่มลงใน dropdown
-                    $.each(response, function(key, value) {
-                        $('#farmDropdown').append('<option value="' + value.FarmID + '">' + value.FarmName + '</option>');
-                    });
-                },
-                error: function() {
-                    alert('เกิดข้อผิดพลาดในการดึงข้อมูล');
-                }
-            });
-        });
-
-        $(document).ready(function() {
-            // ทำการเรียกข้อมูลหมวดหมู่ผ่าน AJAX
-            $.ajax({
-                url: 'get_coop.php', // ไฟล์ PHP ที่ดึงข้อมูลจากฐานข้อมูล
-                type: 'GET',
-                dataType: 'json', // คาดหวังข้อมูลในรูปแบบ JSON
-                success: function(response) {
-                    //console.log(response);
-                    // ลูปข้อมูลที่ได้จาก AJAX เพื่อเพิ่มลงใน dropdown
-                    $.each(response, function(key, value) {
-                        $('#coopDropdown').append('<option value="' + value.CoopID + '">' + value.CoopName + '</option>');
-                    });
-                },
-                error: function() {
-                    alert('เกิดข้อผิดพลาดในการดึงข้อมูล');
-                }
-            });
-        });
-
-        $(document).ready(function() {
-            $.ajax({
-                url: 'get_sortType.php',
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    console.log(response);
-                    $.each(response, function(key, value) {
-                        $('#sortDropdown').append('<option value="' + value.SortTypeID + '">' + value.SortTypeName + '</option>')
-                    });
-                },
-                error: function() {
-                    alert('เกิดข้อผิดพลาดในการดึงข้อมูล');
-                }
+                ]
             });
         });
 
@@ -609,23 +565,23 @@
             // ฟังก์ชันคำนวณผลลัพธ์
             function calculateSum() {
                 // ดึงค่าจาก textbox number1 และ number2
-                var num1 = parseFloat($('#sort_f').val()) || 0; // ถ้าไม่มีค่าให้เป็น 0
-                var num2 = parseFloat($('#sort_m').val()) || 0;
+                var num1 = parseFloat($('#sale_f').val()) || 0; // ถ้าไม่มีค่าให้เป็น 0
+                var num2 = parseFloat($('#sale_m').val()) || 0;
 
                 // คำนวณผลลัพธ์
                 var sum = num1 + num2;
 
                 // แสดงผลลัพธ์ใน textbox sum
-                $('#sort').val(sum);
+                $('#sale').val(sum);
             }
 
             // ตรวจจับการเปลี่ยนแปลงใน textbox number1 และ number2
-            $('#sort_f, #sort_m').on('input', function() {
+            $('#sale_f, #sale_m').on('input', function() {
                 calculateSum();
             });
         });
 
-        function clearText(){
+        function clearText() {
             event.preventDefault();
             $('input[type="text"]').val('');
             $('select').prop('selectedIndex', 0);
@@ -636,76 +592,134 @@
             $('#' + modalId).modal('hide');
         }
 
-        ///ส่วนแก้ไข
+        //เพิ่ม-ลบ-แก้ไข
         $(document).ready(function() {
-            var table = $('#sortTable').DataTable({
-                "ajax": {
-                    "url": "get_sort.php",  // เรียกใช้ PHP ที่ดึงข้อมูล
-                    "dataSrc": ""                 // กำหนด data source เป็น empty string สำหรับ JSON แบบ array
-                },
-                "columns": [
-                    { "data": "breedName" },
-                    { "data": "FarmName" },
-                    { "data": "CoopName" },
-                    { "data": "SortF" },
-                    { "data": "SortM" },
-                    { "data": "SortTypeName" },
-                    { "data": "SortDate" },
-                    { "data": "SortTime" },
-                    {
-                        "data": null,  // คอลัมน์นี้ไม่มีข้อมูลในฐานข้อมูล
-                        "render": function (data, type, row) {
-                            return '<div class="action-buttons">' +
-                                    '<button class="edit-btn btn btn-warning shadow-sm" ' + 
-                                    'data-id="' + row.SortID + '" ' +
-                                    'data-farm="' + row.FarmID + '" ' + 
-                                    'data-coop="' + row.CoopID + '" ' +
-                                    'data-sortf="' + row.SortF + '" ' +
-                                    'data-sortm="' + row.SortM + '" ' +
-                                    'data-type="' + row.SortTypeID + '" ' + 
-                                    'data-date="' + row.SortDate + '"><i class="far fa-edit"></i></button>' +
-                                    ' <button class="del-btn btn btn-danger shadow-sm" data-id="' + row.SortID + '"><i class="far fa-trash-alt"></i></button>' +
-                                    '</div>';
-                        }
-                    }
-                ]
+
+            // Add
+            $('#addBtn').on('click', function() {
+                $('#addModal').modal('show');
             });
 
-            // เมื่อคลิกปุ่ม Edit
-            $('#sortTable tbody').on('click', '.edit-btn', function() {
+            // เมื่อผู้ใช้คลิกปุ่มบันทึกใน modal (บันทึกข้อมูลใหม่)
+            $('#saveAddBtn').on('click', function() {
+                var formData = {
+                    farm: $('#farmDropdown').val(),
+                    coop: $('#coopDropdown').val(),
+                    sale_f: $('#sale_f').val(),
+                    sale_m: $('#sale_m').val(),
+                    type: $('#saleDropdown').val(),
+                    price: $('#price').val(),
+                    inputDate: $('#inputDate').val()
+                };
+                //console.log(formData);
+                // ส่งข้อมูลด้วย AJAX
+                $.ajax({
+                    url: 'chickensale_add.php', // PHP ที่จัดการการเพิ่มข้อมูล
+                    type: 'POST',
+                    dataType: 'json',
+                    data: formData,
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire('Success!', response.message, 'success').then(() => {
+                                $('#addModal').modal('hide'); // ปิด modal
+                                $('input[type="text"]').val(''); // เคลียร์ textbox ทั้งหมด
+                                $('select').prop('selectedIndex', 0); // รีเซ็ต dropdown ทั้งหมดกลับเป็นค่าแรก
+                                $('input[type="date"]').val('');
+                                $('#saleTable').DataTable().ajax.reload(null, false); // รีเฟรช DataTable
+                            });
+                        } else {
+                            Swal.fire('Error!', response.message, 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) { // เพิ่ม parameter xhr ในฟังก์ชัน error
+                        Swal.fire('Error!', 'An error occurred while adding the record: ' + xhr.responseText, 'error');
+                    }
+                });
+            });
+
+            $.ajax({
+                url: 'get_farm.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    //console.log(response);
+                    $.each(response, function(key, value) {
+                        $('#farmDropdown').append('<option value="' + value.FarmID + '">' + value.FarmName + '</option>');
+                    });
+                },
+                error: function() {
+                    alert('เกิดข้อผิดพลาดในการดึงข้อมูล');
+                }
+            });
+
+            $.ajax({
+                url: 'get_coop.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    //console.log(response);
+                    $.each(response, function(key, value) {
+                        $('#coopDropdown').append('<option value="' + value.CoopID + '">' + value.CoopName + '</option>');
+                    });
+                },
+                error: function() {
+                    alert('เกิดข้อผิดพลาดในการดึงข้อมูล');
+                }
+            });
+
+            $.ajax({
+                url: 'get_sortType.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    //console.log(response);
+                    $.each(response, function(key, value) {
+                        $('#sortDropdown').append('<option value="' + value.SortTypeID + '">' + value.SortTypeName + '</option>')
+                    });
+                },
+                error: function() {
+                    alert('เกิดข้อผิดพลาดในการดึงข้อมูล');
+                }
+            });
+
+            //Edit
+            $('#saleTable tbody').on('click', '.edit-btn', function() {
                 // ดึงข้อมูลจากปุ่มที่คลิก
-                var id = $(this).data('id');
-                var farm = $(this).data('farm');
-                var coop = $(this).data('coop');
-                var sortf = $(this).data('sortf');
-                var sortm = $(this).data('sortm');
-                var type = $(this).data('type');
-                var date = $(this).data('date');
+                var id = $(this).attr('data-id');
+                var farm = $(this).attr('data-farm');
+                var coop = $(this).attr('data-coop');
+                var saleF = $(this).attr('data-saleF');
+                var saleM = $(this).attr('data-saleM');
+                var type = $(this).attr('data-type');
+                var price = $(this).attr('data-price');
+                var date = $(this).attr('data-date');
 
                 // ตรวจสอบค่าที่ดึงมา
-                console.log("ID: " + id);
+                /*console.log("ID: " + id);
                 console.log("Farm: " + farm);
                 console.log("Coop: " + coop);
-                console.log("DeadF: " + sortf);
-                console.log("DeadM: " + sortm);
+                console.log("saleF: " + saleF);
+                console.log("saleM: " + saleM);
                 console.log("Type: " + type);
-                console.log("Date: " + date);
+                console.log("price: " + price);
+                console.log("Date: " + date);*/
 
                 // ใส่ข้อมูลในฟอร์มของ Modal
                 $('#editId').val(id);
-                $('#editFarmS').val(farm);
-                $('#editCoopS').val(coop);
-                $('#editSortF').val(sortf);
-                $('#editSortM').val(sortm);
-                $('#editTypeS').val(type);
-                $('#editDateS').val(date);
+                $('#editFarm').val(farm);
+                $('#editCoop').val(coop);
+                $('#editF').val(saleF);
+                $('#editM').val(saleM);
+                $('#editType').val(type);
+                $('#editPrice').val(price);
+                $('#editDate').val(date);
 
                 //คำนวนจำนวนที่ตายทั้งหมด
-                var totalSort = parseInt(sortf) + parseInt(sortm);
-                $('#totalSort').val(totalSort);
+                var total = parseInt(saleF) + parseInt(saleM);
+                $('#sum').val(total);
 
                 // เปิด Modal
-                $('#editModalSort').modal('show');
+                $('#editModal').modal('show');
             });
 
             $.ajax({
@@ -714,9 +728,8 @@
                 dataType: 'json', // คาดหวังข้อมูลในรูปแบบ JSON
                 success: function(response) {
                     //console.log(response);
-                    // ลูปข้อมูลที่ได้จาก AJAX เพื่อเพิ่มลงใน dropdown
                     $.each(response, function(key, value) {
-                        $('#editFarmS').append('<option value="' + value.FarmID + '">' + value.FarmName + '</option>');
+                        $('#editFarm').append('<option value="' + value.FarmID + '">' + value.FarmName + '</option>');
                     });
                 },
                 error: function() {
@@ -730,9 +743,8 @@
                 dataType: 'json', // คาดหวังข้อมูลในรูปแบบ JSON
                 success: function(response) {
                     //console.log(response);
-                    // ลูปข้อมูลที่ได้จาก AJAX เพื่อเพิ่มลงใน dropdown
                     $.each(response, function(key, value) {
-                        $('#editCoopS').append('<option value="' + value.CoopID + '">' + value.CoopName + '</option>');
+                        $('#editCoop').append('<option value="' + value.CoopID + '">' + value.CoopName + '</option>');
                     });
                 },
                 error: function() {
@@ -741,39 +753,39 @@
             });
 
             $.ajax({
-                url: 'get_sortType.php',
+                url: 'get_saleType.php',
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {
-                    console.log(response);
+                    //console.log(response);
                     $.each(response, function(key, value) {
-                        $('#editTypeS').append('<option value="' + value.SortTypeID + '">' + value.SortTypeName + '</option>')
+                        $('#editType').append('<option value="' + value.SaleTypeID + '">' + value.SaleTypeName + '</option>')
                     });
                 },
                 error: function() {
                     alert('เกิดข้อผิดพลาดในการดึงข้อมูล');
                 }
             });
-            
+
             $(document).ready(function() {
-            // ฟังก์ชันคำนวณผลลัพธ์
-            function calculateSum() {
-                // ดึงค่าจาก textbox number1 และ number2
-                var num1 = parseFloat($('#editSortF').val()) || 0; // ถ้าไม่มีค่าให้เป็น 0
-                var num2 = parseFloat($('#editSortM').val()) || 0;
+                // ฟังก์ชันคำนวณผลลัพธ์
+                function calculateSum() {
+                    // ดึงค่าจาก textbox number1 และ number2
+                    var num1 = parseFloat($('#editF').val()) || 0; // ถ้าไม่มีค่าให้เป็น 0
+                    var num2 = parseFloat($('#editM').val()) || 0;
 
-                // คำนวณผลลัพธ์
-                var sum = num1 + num2;
+                    // คำนวณผลลัพธ์
+                    var sum = num1 + num2;
 
-                // แสดงผลลัพธ์ใน textbox sum
-                $('#totalSort').val(sum);
-            }
+                    // แสดงผลลัพธ์ใน textbox sum
+                    $('#sum').val(sum);
+                }
 
-            // ตรวจจับการเปลี่ยนแปลงใน textbox number1 และ number2
-            $('#editSortF, #editSortM').on('input', function() {
-                calculateSum();
+                // ตรวจจับการเปลี่ยนแปลงใน textbox number1 และ number2
+                $('#editF, #editM').on('input', function() {
+                    calculateSum();
+                });
             });
-        });
 
 
             // เมื่อส่งฟอร์มใน Modal
@@ -783,26 +795,27 @@
                 // ดึงข้อมูลที่แก้ไขจากฟอร์ม
                 var formData = {
                     id: $('#editId').val(),
-                    farm: $('#editFarmS').val(),
-                    coop: $('#editCoopS').val(),
-                    sort_f: $('#editSortF').val(),
-                    sort_m: $('#editSortM').val(),
-                    sort: $('#editTypeS').val(),
-                    inputDate: $('#editDateS').val()
+                    farm: $('#editFarm').val(),
+                    coop: $('#editCoop').val(),
+                    sale_f: $('#editF').val(),
+                    sale_m: $('#editM').val(),
+                    price: $('#editPrice').val(),
+                    type: $('#editType').val(),
+                    inputDate: $('#editDate').val()
                 };
-                //console.log(formData);
+                console.log(formData);
                 // ส่งข้อมูลไปยังเซิร์ฟเวอร์เพื่อบันทึกการแก้ไข
                 $.ajax({
-                    url: 'chickensort_edit.php',
+                    url: 'chickensale_edit.php',
                     type: 'POST',
                     data: formData,
                     success: function(response) {
                         //console.log(response.message);
                         if (response.status === 'success') {
                             Swal.fire('Success!', response.message, 'success').then(() => {
-                                        $('#editModal').modal('hide'); // ปิด Modal
-                                        table.ajax.reload(null, false);
-                                    });
+                                $('#editModal').modal('hide'); // ปิด Modal
+                                $('#saleTable').DataTable().ajax.reload(null, false);
+                            });
                         } else {
                             Swal.fire('Error!', response.message, 'error');
                         }
@@ -813,7 +826,7 @@
                 });
             });
 
-            $('#sortTable tbody').on('click', '.del-btn', function() {
+            $('#saleTable tbody').on('click', '.del-btn', function() {
                 var id = $(this).data('id');
                 Swal.fire({
                     title: 'Are you sure?',
@@ -826,22 +839,24 @@
                     if (result.isConfirmed) {
                         // ถ้าผู้ใช้ยืนยันการลบ ส่ง AJAX ไปที่ delete.php
                         $.ajax({
-                            url: 'chickensort_del.php',
+                            url: 'chickensale_del.php',
                             type: 'POST',
                             dataType: 'json',
-                            data: { id: id },
+                            data: {
+                                id: id
+                            },
                             success: function(response) {
                                 if (response.status === 'success') {
                                     Swal.fire('Success!', response.message, 'success').then(() => {
                                         $('#editModal').modal('hide'); // ปิด Modal
-                                        table.ajax.reload(null, false);
+                                        $('#saleTable').DataTable().ajax.reload(null, false);
                                     });
                                 } else {
                                     Swal.fire('Error!', response.message, 'error');
                                 }
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                console.error("Error details: ", textStatus, errorThrown);  // ตรวจสอบรายละเอียดข้อผิดพลาด
+                                console.error("Error details: ", textStatus, errorThrown); // ตรวจสอบรายละเอียดข้อผิดพลาด
                                 Swal.fire('Error!', 'An error occurred while deleting the record.', 'error');
                             }
                         });
@@ -850,10 +865,9 @@
             });
 
         });
-        
     </script>
 
-    
+
     <script src="js/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="css/sweetalert2.min.css">
 
@@ -874,7 +888,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-   
+
 
 </body>
 

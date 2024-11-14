@@ -1,10 +1,5 @@
 <?php
-    session_start();
-
-    if(!isset($_SESSION['username'])){
-        header("location:login.html");
-        exit();
-    }
+include 'checkSession.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,8 +31,8 @@
     <script src="./js/jquery-3.7.1.min.js"></script>
 
     <style>
-        .btn-sd:hover{
-            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        .btn-sd:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
         .action-buttons {
@@ -47,19 +42,23 @@
         }
 
         .action-buttons button {
-            margin: 0 5px; /* กำหนดระยะห่างระหว่างปุ่ม */
+            margin: 0 5px;
+            /* กำหนดระยะห่างระหว่างปุ่ม */
         }
 
         th.id-col {
-            width: 30%;  /* คอลัมน์ ID */
+            width: 30%;
+            /* คอลัมน์ ID */
         }
 
         th.name-col {
-            width: 50%; /* คอลัมน์ Name */
+            width: 50%;
+            /* คอลัมน์ Name */
         }
 
         th.actions-col {
-            width: 20%; /* คอลัมน์ Actions */
+            width: 20%;
+            /* คอลัมน์ Actions */
         }
     </style>
 
@@ -71,7 +70,7 @@
     <div id="wrapper">
 
         <?php
-            require_once 'sidebar.php';
+        require_once 'sidebar.php';
         ?>
 
         <!-- Content Wrapper -->
@@ -290,7 +289,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">บันทึกข้อมูลพันธุ์ไก่</h1>
-                        
+
                         <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                             <i class="fas fa-download fa-sm text-white-50"></i> รายงาน
                         </a>-->
@@ -298,37 +297,37 @@
                             <i class="fas fa-plus fa-sm text-white-50"></i> เพิ่มข้อมูล
                         </a>
                     </div>
-                   
+
                     <!-- Content Row -->
                     <div class="row">
 
-                    
+
                         <!-- Area Chart -->
                         <div class="col-xl-12 col-lg-7">
                             <div class="card shadow mb-4">
-                                
+
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                <div class="table-responsive">
-                                <table class="table table-bordered" id="breedTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th class="id-col">รหัส</th>
-                                            <th class="name-col">ชื่อ</th>
-                                            <th class="action-col">ดำเนินการ</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th class="id-col">รหัส</th>
-                                            <th class="name-col">ชื่อ</th>
-                                            <th class="action-col">ดำเนินการ</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="breedTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="id-col">รหัส</th>
+                                                    <th class="name-col">ชื่อ</th>
+                                                    <th class="action-col">ดำเนินการ</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th class="id-col">รหัส</th>
+                                                    <th class="name-col">ชื่อ</th>
+                                                    <th class="action-col">ดำเนินการ</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
 
                             </div>
@@ -432,19 +431,22 @@
         $(document).ready(function() {
             var table = $('#breedTable').DataTable({
                 "ajax": {
-                    "url": "get_breeds.php",  // เรียกใช้ PHP ที่ดึงข้อมูล
-                    "dataSrc": ""                 // กำหนด data source เป็น empty string สำหรับ JSON แบบ array
+                    "url": "get_breeds.php", // เรียกใช้ PHP ที่ดึงข้อมูล
+                    "dataSrc": "" // กำหนด data source เป็น empty string สำหรับ JSON แบบ array
                 },
-                "columns": [
-                    { "data": "breedID" },
-                    { "data": "breedName" },
+                "columns": [{
+                        "data": "breedID"
+                    },
                     {
-                        "data": null,  // คอลัมน์นี้ไม่มีข้อมูลในฐานข้อมูล
-                        "render": function (data, type, row) {
+                        "data": "breedName"
+                    },
+                    {
+                        "data": null, // คอลัมน์นี้ไม่มีข้อมูลในฐานข้อมูล
+                        "render": function(data, type, row) {
                             return '<div class="action-buttons">' +
-                                   '<button class="edit-btn btn btn-warning shadow-sm" data-id="' + row.breedID + '" data-name="' + row.breedName + '"><i class="far fa-edit"></i></button>' +
-                                   ' <button class="del-btn btn btn-danger shadow-sm" data-id="' + row.breedID + '"><i class="far fa-trash-alt"></i></button>' +
-                                   '</div>';
+                                '<button class="edit-btn btn btn-warning shadow-sm" data-id="' + row.breedID + '" data-name="' + row.breedName + '"><i class="far fa-edit"></i></button>' +
+                                ' <button class="del-btn btn btn-danger shadow-sm" data-id="' + row.breedID + '"><i class="far fa-trash-alt"></i></button>' +
+                                '</div>';
                         }
                     }
                 ]
@@ -457,7 +459,7 @@
 
             // เมื่อผู้ใช้คลิกปุ่มบันทึกใน modal (บันทึกข้อมูลใหม่)
             $('#saveAddBtn').on('click', function() {
-                var name = $('#breedName').val();  // รับค่าจาก input field
+                var name = $('#breedName').val(); // รับค่าจาก input field
 
                 // ตรวจสอบให้แน่ใจว่ามีการป้อนชื่อ
                 if (!name) {
@@ -467,7 +469,7 @@
 
                 // ส่งข้อมูลด้วย AJAX
                 $.ajax({
-                    url: 'breed_add.php',  // PHP ที่จัดการการเพิ่มข้อมูล
+                    url: 'breed_add.php', // PHP ที่จัดการการเพิ่มข้อมูล
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -476,9 +478,9 @@
                     success: function(response) {
                         if (response.status === 'success') {
                             Swal.fire('Success!', response.message, 'success').then(() => {
-                                $('#addModal').modal('hide');  // ปิด modal
-                                $('#breedName').val('');   // ล้างค่า input field
-                                $('#breedTable').DataTable().ajax.reload(null, false);  // รีเฟรช DataTable
+                                $('#addModal').modal('hide'); // ปิด modal
+                                $('#breedName').val(''); // ล้างค่า input field
+                                $('#breedTable').DataTable().ajax.reload(null, false); // รีเฟรช DataTable
                             });
                         } else {
                             Swal.fire('Error!', response.message, 'error');
@@ -516,14 +518,17 @@
                 $.ajax({
                     url: 'breed_edit.php',
                     type: 'POST',
-                    data: { id: id, name: name },
+                    data: {
+                        id: id,
+                        name: name
+                    },
                     success: function(response) {
                         console.log(response.message);
                         if (response.status === 'success') {
                             Swal.fire('Success!', response.message, 'success').then(() => {
-                                        $('#editModal').modal('hide'); // ปิด Modal
-                                        table.ajax.reload(null, false);
-                                    });
+                                $('#editModal').modal('hide'); // ปิด Modal
+                                table.ajax.reload(null, false);
+                            });
                         } else {
                             Swal.fire('Error!', response.message, 'error');
                         }
@@ -550,7 +555,9 @@
                             url: 'breed_del.php',
                             type: 'POST',
                             dataType: 'json',
-                            data: { id: id },
+                            data: {
+                                id: id
+                            },
                             success: function(response) {
                                 if (response.status === 'success') {
                                     Swal.fire('Success!', response.message, 'success').then(() => {
@@ -570,13 +577,9 @@
             });
 
         });
-
-        
-
-
     </script>
 
-    
+
     <script src="js/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="css/sweetalert2.min.css">
 
@@ -597,7 +600,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-   
+
 
 </body>
 

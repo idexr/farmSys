@@ -8,6 +8,7 @@
 
         // สร้างคำสั่ง SQL เพื่อดึงข้อมูล
         $sql = 'SELECT imp.importID
+                    ,b.breedID
                     ,b.breedName
                     ,imp.importQTY
                     ,imp.importPrice

@@ -1,10 +1,5 @@
 <?php
-    session_start();
-
-    if(!isset($_SESSION['username'])){
-        header("location:login.html");
-        exit();
-    }
+include 'checkSession.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,15 +27,15 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    
+
     <script src="./js/jquery-3.7.1.min.js"></script>
 
     <style>
-        .btn-sd:hover{
-            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        .btn-sd:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
         .action-buttons {
@@ -50,7 +45,8 @@
         }
 
         .action-buttons button {
-            margin: 0 5px; /* กำหนดระยะห่างระหว่างปุ่ม */
+            margin: 0 5px;
+            /* กำหนดระยะห่างระหว่างปุ่ม */
         }
 
         th {
@@ -70,7 +66,8 @@
         }
 
         th.twenty-col {
-            width: 20%; /* คอลัมน์ Actions */
+            width: 20%;
+            /* คอลัมน์ Actions */
         }
     </style>
 
@@ -82,7 +79,7 @@
     <div id="wrapper">
 
         <?php
-            require_once 'sidebar.php';
+        require_once 'sidebar.php';
         ?>
 
         <!-- Content Wrapper -->
@@ -311,7 +308,7 @@
                         <!-- Area Chart -->
                         <div class="col-xl-12 col-lg-7">
                             <div class="card shadow mb-4">
-                                
+
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -389,21 +386,21 @@
                                 <label for="farmDropdown">ฟาร์ม</label>
                                 <select class="form-select" id="farmDropdown" name="farmDropdown">
                                     <option value="">เลือกฟาร์ม</option>
-                                </select> 
+                                </select>
                             </div>
                             <div class="col-sm-4 mt-3">
                                 <label for="coopDropdown">เล้าที่</label>
                                 <select class="form-select" id="coopDropdown" name="coopDropdown">
                                     <option value="">เลือกเล้า</option>
                                 </select>
-                            </div>    
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4 mt-5">
                                 <label for="breedDropdown">ไก่</label>
                                 <select class="form-select" id="breedDropdown" name="breedDropdown">
                                     <option value="">เลือกไก่นำเข้า</option>
-                                </select> 
+                                </select>
                             </div>
                         </div>
                         <div class="row">
@@ -413,11 +410,11 @@
                             </div>
                             <div class="col-sm-4 mt-1">
                                 <label for="chickenM">จำนวนตัวผู้</label>
-                                <input type="text" class="form-control" id="chickenM" placeholder="" name="chickenM"> 
+                                <input type="text" class="form-control" id="chickenM" placeholder="" name="chickenM">
                             </div>
                             <div class="col-sm-4 mt-1">
                                 <label for="chickenQTY">จำนวนทั้งหมด</label>
-                                <input type="text" class="form-control" id="chickenQTY" placeholder="" name="chickenQTY" readonly> 
+                                <input type="text" class="form-control" id="chickenQTY" placeholder="" name="chickenQTY" readonly>
                             </div>
                         </div>
                     </form>
@@ -452,21 +449,21 @@
                                 <label for="editFarm">ฟาร์ม</label>
                                 <select class="form-select" id="editFarm" name="editFarm">
                                     <option value="">เลือกฟาร์ม</option>
-                                </select> 
+                                </select>
                             </div>
                             <div class="col-sm-4 mt-3">
                                 <label for="editCoop">เล้าที่</label>
                                 <select class="form-select" id="editCoop" name="editCoop">
                                     <option value="">เลือกเล้า</option>
                                 </select>
-                            </div>    
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-2 mt-5">
                                 <label for="editBreed">ไก่</label>
                                 <select class="form-select" id="editBreed" name="editBreed">
                                     <option value="">เลือกไก่นำเข้า</option>
-                                </select> 
+                                </select>
                             </div>
                             <div class="col-sm-2 mt-5">
                                 <label for="editPrice">ราคา</label>
@@ -480,11 +477,11 @@
                             </div>
                             <div class="col-sm-2 mt-1">
                                 <label for="editChickenM">จำนวนตัวผู้</label>
-                                <input type="text" class="form-control" id="editChickenM" placeholder="" name="editChickenM"> 
+                                <input type="text" class="form-control" id="editChickenM" placeholder="" name="editChickenM">
                             </div>
                             <div class="col-sm-2 mt-1">
                                 <label for="sum">จำนวนทั้งหมด</label>
-                                <input type="text" class="form-control" id="sum" placeholder="" name="sum" readonly> 
+                                <input type="text" class="form-control" id="sum" placeholder="" name="sum" readonly>
                             </div>
                         </div>
                     </form>
@@ -505,7 +502,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span class="close" onclick="closeModal('editModalChicken')">&times;</span>
+                        <span class="close" onclick="closeModal('editModalChicken')">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -521,13 +518,18 @@
         $(document).ready(function() {
             var table = $('#chickenTable').DataTable({
                 "ajax": {
-                    "url": "get_chicken.php",  // เรียกใช้ PHP ที่ดึงข้อมูล
-                    "dataSrc": ""                 // กำหนด data source เป็น empty string สำหรับ JSON แบบ array
+                    "url": "get_chicken.php", // เรียกใช้ PHP ที่ดึงข้อมูล
+                    "dataSrc": "" // กำหนด data source เป็น empty string สำหรับ JSON แบบ array
                 },
-                "columns": [
-                    { "data": "ChickenID" },
-                    { "data": "FarmName" },
-                    { "data": "CoopName" },
+                "columns": [{
+                        "data": "ChickenID"
+                    },
+                    {
+                        "data": "FarmName"
+                    },
+                    {
+                        "data": "CoopName"
+                    },
                     {
                         "data": null,
                         "render": function(data, type, row) {
@@ -551,9 +553,15 @@
                             return totalDays + ' วัน';
                         }
                     },
-                    { "data": "breedName" },
-                    { "data": "ChickenF" },
-                    { "data": "ChickenM" },
+                    {
+                        "data": "breedName"
+                    },
+                    {
+                        "data": "ChickenF"
+                    },
+                    {
+                        "data": "ChickenM"
+                    },
                     {
                         "data": "ChickenStatus",
                         "render": function(data, type, row) {
@@ -562,40 +570,42 @@
                             return '<span class="' + colorClass + '">' + statusText + '</span>';
                         }
                     },
-                    { "data": "ChickenDate" },
                     {
-                        "data": null,  // คอลัมน์นี้ไม่มีข้อมูลในฐานข้อมูล
-                        "render": function (data, type, row) {
+                        "data": "ChickenDate"
+                    },
+                    {
+                        "data": null, // คอลัมน์นี้ไม่มีข้อมูลในฐานข้อมูล
+                        "render": function(data, type, row) {
                             return '<div class="action-buttons">' +
-                                    '<button class="edit-btn btn btn-warning shadow-sm" ' + 
-                                    'data-id="' + row.ChickenID + '" ' +
-                                    'data-farm="' + row.FarmID + '" ' + 
-                                    'data-coop="' + row.CoopID + '" ' +
-                                    'data-import="' + row.importID + '" ' +
-                                    'data-breed="' + row.breedID + '" ' +
-                                    'data-f="' + row.ChickenF + '" ' +
-                                    'data-m="' + row.ChickenM + '" ' +
-                                    'data-status="' + row.ChickenStatus + '" ' + 
-                                    'data-date="' + row.ChickenDate + '"><i class="far fa-edit"></i></button>' +
-                                    ' <button class="del-btn btn btn-danger shadow-sm" data-id="' + row.ChickenID + '"><i class="far fa-trash-alt"></i></button>' +
-                                    '</div>';
+                                '<button class="edit-btn btn btn-warning shadow-sm" ' +
+                                'data-id="' + row.ChickenID + '" ' +
+                                'data-farm="' + row.FarmID + '" ' +
+                                'data-coop="' + row.CoopID + '" ' +
+                                'data-import="' + row.importID + '" ' +
+                                'data-breed="' + row.breedID + '" ' +
+                                'data-f="' + row.ChickenF + '" ' +
+                                'data-m="' + row.ChickenM + '" ' +
+                                'data-status="' + row.ChickenStatus + '" ' +
+                                'data-date="' + row.ChickenDate + '"><i class="far fa-edit"></i></button>' +
+                                ' <button class="del-btn btn btn-danger shadow-sm" data-id="' + row.ChickenID + '"><i class="far fa-trash-alt"></i></button>' +
+                                '</div>';
                         }
                     }
                 ]
             });
         });
 
-        function clearText(){
+        function clearText() {
             event.preventDefault();
             $('input[type="text"]').val('');
             $('select').prop('selectedIndex', 0);
             $('input[type="date"]').val('');
         }
-        
+
         function closeModal(modalId) {
             $('#' + modalId).modal('hide');
         }
-    
+
         $(document).ready(function() {
             // เปิด modal เมื่อคลิกปุ่ม "Add New Cause"
             $('#addBtn').on('click', function() {
@@ -653,13 +663,13 @@
                             Swal.fire('Success!', response.message, 'success').then(() => {
                                 $('#addModal').modal('hide');
                                 $('#addForm')[0].reset();
-                                $('#chickenTable').DataTable().ajax.reload(null, false);  // รีเฟรช DataTable
+                                $('#chickenTable').DataTable().ajax.reload(null, false); // รีเฟรช DataTable
                             });
                         } else {
                             Swal.fire('Error!', response.message, 'error');
                         }
                     },
-                    error: function(xhr, status, error) {  // เพิ่ม parameter xhr ในฟังก์ชัน error
+                    error: function(xhr, status, error) { // เพิ่ม parameter xhr ในฟังก์ชัน error
                         Swal.fire('Error!', 'An error occurred while adding the record: ' + xhr.responseText, 'error');
                     }
                 });
@@ -737,7 +747,9 @@
             $.ajax({
                 url: 'checkChicken.php', // URL ของ PHP หรือ endpoint ที่ดึงข้อมูล
                 type: 'GET',
-                data: { importID: importID }, // ส่ง importID ที่ต้องการ
+                data: {
+                    importID: importID
+                }, // ส่ง importID ที่ต้องการ
                 success: function(response) {
                     // สมมุติว่า response คือจำนวนที่นำเข้า importQTY
                     let importQTY = response.importQTY;
@@ -919,9 +931,9 @@
                         console.log(response.message);
                         if (response.status === 'success') {
                             Swal.fire('Success!', response.message, 'success').then(() => {
-                                        $('#editModalChicken').modal('hide'); // ปิด Modal
-                                        $('#chickenTable').DataTable().ajax.reload(null, false);
-                                    });
+                                $('#editModalChicken').modal('hide'); // ปิด Modal
+                                $('#chickenTable').DataTable().ajax.reload(null, false);
+                            });
                         } else {
                             Swal.fire('Error!', response.message, 'error');
                         }
@@ -948,7 +960,9 @@
                             url: 'chicken_del.php',
                             type: 'POST',
                             dataType: 'json',
-                            data: { id: id },
+                            data: {
+                                id: id
+                            },
                             success: function(response) {
                                 if (response.status === 'success') {
                                     Swal.fire('Success!', response.message, 'success').then(() => {
@@ -959,7 +973,7 @@
                                 }
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                console.error("Error details: ", textStatus, errorThrown);  // ตรวจสอบรายละเอียดข้อผิดพลาด
+                                console.error("Error details: ", textStatus, errorThrown); // ตรวจสอบรายละเอียดข้อผิดพลาด
                                 Swal.fire('Error!', 'An error occurred while deleting the record.', 'error');
                             }
                         });
@@ -968,9 +982,8 @@
             });
 
         });
-        
     </script>
-    
+
     <script src="js/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="css/sweetalert2.min.css">
 
@@ -991,7 +1004,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-   
+
 
 </body>
 

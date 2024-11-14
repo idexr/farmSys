@@ -1,5 +1,5 @@
 <?php
-// กำหนด Content-Type เป็น JSON เพื่อให้เข้ากับการตอบกลับ AJAX
+date_default_timezone_set('Asia/Bangkok');
 header('Content-Type: application/json');
 
 // นำเข้าไฟล์สำหรับเชื่อมต่อฐานข้อมูล

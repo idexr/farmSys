@@ -24,7 +24,7 @@ try {
         // SQL สำหรับอัปเดตข้อมูลในตาราง
         $sql = "UPDATE importChicken SET 
                     breedID = :breed,
-                    importQTY = :chickenF, 
+                    importQTY = :qty, 
                     importPrice = :price, 
                     importDate = :currentDate,
                     importTime = :currentTime

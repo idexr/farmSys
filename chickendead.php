@@ -1,10 +1,5 @@
 <?php
-    session_start();
-
-    if(!isset($_SESSION['username'])){
-        header("location:login.html");
-        exit();
-    }
+include 'checkSession.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,12 +30,12 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    
+
     <script src="./js/jquery-3.7.1.min.js"></script>
 
     <style>
-        .btn-sd:hover{
-            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        .btn-sd:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
         .action-buttons {
@@ -50,7 +45,8 @@
         }
 
         .action-buttons button {
-            margin: 0 5px; /* กำหนดระยะห่างระหว่างปุ่ม */
+            margin: 0 5px;
+            /* กำหนดระยะห่างระหว่างปุ่ม */
         }
 
         th.ten-col {
@@ -62,7 +58,8 @@
         }
 
         th.twenty-col {
-            width: 20%; /* คอลัมน์ Actions */
+            width: 20%;
+            /* คอลัมน์ Actions */
         }
     </style>
 
@@ -74,7 +71,7 @@
     <div id="wrapper">
 
         <?php
-            require_once 'sidebar.php';
+        require_once 'sidebar.php';
         ?>
 
         <!-- Content Wrapper -->
@@ -303,7 +300,7 @@
                         <!-- Area Chart -->
                         <div class="col-xl-12 col-lg-7">
                             <div class="card shadow mb-4">
-                                
+
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -374,7 +371,7 @@
                                 <label for="farmDropdown">ฟาร์ม</label>
                                 <select class="form-select" id="farmDropdown" name="farmDropdown">
                                     <option value="">เลือกฟาร์ม</option>
-                                </select> 
+                                </select>
                             </div>
                             <div class="col-sm-4 mt-3">
                                 <label for="coopDropdown">เล้าที่</label>
@@ -394,11 +391,11 @@
                             </div>
                             <div class="col-sm-2 mt-5">
                                 <label for="dead_m">จำนวนตัวผู้ที่ตาย</label>
-                                <input type="text" class="form-control" id="dead_m" placeholder="" name="dead_m"> 
+                                <input type="text" class="form-control" id="dead_m" placeholder="" name="dead_m">
                             </div>
                             <div class="col-sm-2 mt-5">
                                 <label for="dead">จำนวนที่ตายทั้งหมด</label>
-                                <input type="text" class="form-control" id="dead" placeholder="" name="dead" readonly> 
+                                <input type="text" class="form-control" id="dead" placeholder="" name="dead" readonly>
                             </div>
                         </div>
                         <div class="row">
@@ -406,7 +403,7 @@
                                 <label for="deadDropdown">สาเหตุที่ตาย</label>
                                 <select class="form-select" id="deadDropdown" name="deadDropdown">
                                     <option value="">เลือกสาเหตุที่ตาย</option>
-                                </select> 
+                                </select>
                             </div>
                         </div>
                     </form>
@@ -437,7 +434,7 @@
                                 <label for="editFarmD">ฟาร์ม</label>
                                 <select class="form-select" id="editFarmD" name="editFarmD">
                                     <option value="">เลือกฟาร์ม</option>
-                                </select> 
+                                </select>
                             </div>
                             <div class="col-sm-4 mt-3">
                                 <label for="editCoopD">เล้าที่</label>
@@ -457,11 +454,11 @@
                             </div>
                             <div class="col-sm-2 mt-5">
                                 <label for="editDeadM">จำนวนตัวผู้ที่ตาย</label>
-                                <input type="text" class="form-control" id="editDeadM" placeholder="" name="editDeadM"> 
+                                <input type="text" class="form-control" id="editDeadM" placeholder="" name="editDeadM">
                             </div>
                             <div class="col-sm-2 mt-5">
                                 <label for="totalDead">จำนวนที่ตายทั้งหมด</label>
-                                <input type="text" class="form-control" id="totalDead" placeholder="" name="totalDead" readonly> 
+                                <input type="text" class="form-control" id="totalDead" placeholder="" name="totalDead" readonly>
                             </div>
                         </div>
                         <div class="row">
@@ -469,7 +466,7 @@
                                 <label for="editTypeD">สาเหตุที่ตาย</label>
                                 <select class="form-select" id="editTypeD" name="editTypeD">
                                     <option value="">เลือกสาเหตุที่ตาย</option>
-                                </select> 
+                                </select>
                             </div>
                         </div>
                     </form>
@@ -519,27 +516,27 @@
                     dead: $('#deadDropdown').val(),
                     inputDate: $('#inputDate').val()
                 };
-
+                console.log(formData);
                 // ส่งข้อมูลด้วย AJAX
                 $.ajax({
-                    url: 'chickendead_add.php',  // PHP ที่จัดการการเพิ่มข้อมูล
+                    url: 'chickendead_add.php', // PHP ที่จัดการการเพิ่มข้อมูล
                     type: 'POST',
                     dataType: 'json',
                     data: formData,
                     success: function(response) {
                         if (response.status === 'success') {
                             Swal.fire('Success!', response.message, 'success').then(() => {
-                                $('#addModal').modal('hide');  // ปิด modal
+                                $('#addModal').modal('hide'); // ปิด modal
                                 $('input[type="text"]').val(''); // เคลียร์ textbox ทั้งหมด
                                 $('select').prop('selectedIndex', 0); // รีเซ็ต dropdown ทั้งหมดกลับเป็นค่าแรก
                                 $('input[type="date"]').val('');
-                                $('#deadTable').DataTable().ajax.reload(null, false);  // รีเฟรช DataTable
+                                $('#deadTable').DataTable().ajax.reload(null, false); // รีเฟรช DataTable
                             });
                         } else {
                             Swal.fire('Error!', response.message, 'error');
                         }
                     },
-                    error: function(xhr, status, error) {  // เพิ่ม parameter xhr ในฟังก์ชัน error
+                    error: function(xhr, status, error) { // เพิ่ม parameter xhr ในฟังก์ชัน error
                         Swal.fire('Error!', 'An error occurred while adding the record: ' + xhr.responseText, 'error');
                     }
                 });
@@ -621,7 +618,7 @@
             });
         });
 
-        function clearText(){
+        function clearText() {
             event.preventDefault();
             $('input[type="text"]').val('');
             $('select').prop('selectedIndex', 0);
@@ -636,32 +633,47 @@
         $(document).ready(function() {
             var table = $('#deadTable').DataTable({
                 "ajax": {
-                    "url": "get_dead.php",  // เรียกใช้ PHP ที่ดึงข้อมูล
-                    "dataSrc": ""                 // กำหนด data source เป็น empty string สำหรับ JSON แบบ array
+                    "url": "get_dead.php", // เรียกใช้ PHP ที่ดึงข้อมูล
+                    "dataSrc": "" // กำหนด data source เป็น empty string สำหรับ JSON แบบ array
                 },
-                "columns": [
-                    { "data": "breedName" },
-                    { "data": "FarmName" },
-                    { "data": "CoopName" },
-                    { "data": "DeadF" },
-                    { "data": "DeadM" },
-                    { "data": "DeadTypeName" },
-                    { "data": "DeadDate" },
-                    { "data": "DeadTime" },
+                "columns": [{
+                        "data": "breedName"
+                    },
                     {
-                        "data": null,  // คอลัมน์นี้ไม่มีข้อมูลในฐานข้อมูล
-                        "render": function (data, type, row) {
+                        "data": "FarmName"
+                    },
+                    {
+                        "data": "CoopName"
+                    },
+                    {
+                        "data": "DeadF"
+                    },
+                    {
+                        "data": "DeadM"
+                    },
+                    {
+                        "data": "DeadTypeName"
+                    },
+                    {
+                        "data": "DeadDate"
+                    },
+                    {
+                        "data": "DeadTime"
+                    },
+                    {
+                        "data": null, // คอลัมน์นี้ไม่มีข้อมูลในฐานข้อมูล
+                        "render": function(data, type, row) {
                             return '<div class="action-buttons">' +
-                                    '<button class="edit-btn btn btn-warning shadow-sm" ' + 
-                                    'data-id="' + row.DeadID + '" ' +
-                                    'data-farm="' + row.FarmID + '" ' + 
-                                    'data-coop="' + row.CoopID + '" ' +
-                                    'data-deadf="' + row.DeadF + '" ' +
-                                    'data-deadm="' + row.DeadM + '" ' +
-                                    'data-type="' + row.DeadTypeID + '" ' + 
-                                    'data-date="' + row.DeadDate + '"><i class="far fa-edit"></i></button>' +
-                                    ' <button class="del-btn btn btn-danger shadow-sm" data-id="' + row.DeadID + '"><i class="far fa-trash-alt"></i></button>' +
-                                    '</div>';
+                                '<button class="edit-btn btn btn-warning shadow-sm" ' +
+                                'data-id="' + row.DeadID + '" ' +
+                                'data-farm="' + row.FarmID + '" ' +
+                                'data-coop="' + row.CoopID + '" ' +
+                                'data-deadf="' + row.DeadF + '" ' +
+                                'data-deadm="' + row.DeadM + '" ' +
+                                'data-type="' + row.DeadTypeID + '" ' +
+                                'data-date="' + row.DeadDate + '"><i class="far fa-edit"></i></button>' +
+                                ' <button class="del-btn btn btn-danger shadow-sm" data-id="' + row.DeadID + '"><i class="far fa-trash-alt"></i></button>' +
+                                '</div>';
                         }
                     }
                 ]
@@ -749,24 +761,24 @@
                 }
             });
             $(document).ready(function() {
-            // ฟังก์ชันคำนวณผลลัพธ์
-            function calculateSum() {
-                // ดึงค่าจาก textbox number1 และ number2
-                var num1 = parseFloat($('#editDeadF').val()) || 0; // ถ้าไม่มีค่าให้เป็น 0
-                var num2 = parseFloat($('#editDeadM').val()) || 0;
+                // ฟังก์ชันคำนวณผลลัพธ์
+                function calculateSum() {
+                    // ดึงค่าจาก textbox number1 และ number2
+                    var num1 = parseFloat($('#editDeadF').val()) || 0; // ถ้าไม่มีค่าให้เป็น 0
+                    var num2 = parseFloat($('#editDeadM').val()) || 0;
 
-                // คำนวณผลลัพธ์
-                var sum = num1 + num2;
+                    // คำนวณผลลัพธ์
+                    var sum = num1 + num2;
 
-                // แสดงผลลัพธ์ใน textbox sum
-                $('#totalDead').val(sum);
-            }
+                    // แสดงผลลัพธ์ใน textbox sum
+                    $('#totalDead').val(sum);
+                }
 
-            // ตรวจจับการเปลี่ยนแปลงใน textbox number1 และ number2
-            $('#editDeadF, #editDeadM').on('input', function() {
-                calculateSum();
+                // ตรวจจับการเปลี่ยนแปลงใน textbox number1 และ number2
+                $('#editDeadF, #editDeadM').on('input', function() {
+                    calculateSum();
+                });
             });
-        });
 
             // เมื่อส่งฟอร์มใน Modal
             $('#editBtn').on('click', function(e) {
@@ -794,12 +806,12 @@
                         console.log(response.message);
                         if (response.status === 'success') {
                             Swal.fire('Success!', response.message, 'success').then(() => {
-                                        $('#editModalDead').modal('hide');
-                                        $('input[type="text"]').val(''); // เคลียร์ textbox ทั้งหมด
-                                        $('select').prop('selectedIndex', 0); // รีเซ็ต dropdown ทั้งหมดกลับเป็นค่าแรก
-                                        $('input[type="date"]').val(''); // ปิด Modal
-                                        table.ajax.reload(null, false);
-                                    });
+                                $('#editModalDead').modal('hide');
+                                $('input[type="text"]').val(''); // เคลียร์ textbox ทั้งหมด
+                                $('select').prop('selectedIndex', 0); // รีเซ็ต dropdown ทั้งหมดกลับเป็นค่าแรก
+                                $('input[type="date"]').val(''); // ปิด Modal
+                                table.ajax.reload(null, false);
+                            });
                         } else {
                             Swal.fire('Error!', response.message, 'error');
                         }
@@ -826,7 +838,9 @@
                             url: 'chickendead_del.php',
                             type: 'POST',
                             dataType: 'json',
-                            data: { id: id },
+                            data: {
+                                id: id
+                            },
                             success: function(response) {
                                 if (response.status === 'success') {
                                     Swal.fire('Success!', response.message, 'success').then(() => {
@@ -837,7 +851,7 @@
                                 }
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                console.error("Error details: ", textStatus, errorThrown);  // ตรวจสอบรายละเอียดข้อผิดพลาด
+                                console.error("Error details: ", textStatus, errorThrown); // ตรวจสอบรายละเอียดข้อผิดพลาด
                                 Swal.fire('Error!', 'An error occurred while deleting the record.', 'error');
                             }
                         });
@@ -846,11 +860,10 @@
             });
 
         });
-
     </script>
 
-    
-<script src="js/sweetalert2.min.js"></script>
+
+    <script src="js/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="css/sweetalert2.min.css">
 
     <!-- Bootstrap core JavaScript-->
@@ -870,7 +883,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-   
+
 
 </body>
 

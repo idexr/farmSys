@@ -14,26 +14,28 @@ try {
     $id = isset($_POST['id']) ? $_POST['id'] : '';
     $farm = isset($_POST['farm']) ? $_POST['farm'] : '';
     $coop = isset($_POST['coop']) ? $_POST['coop'] : '';
-    $sort_f = isset($_POST['sort_f']) ? $_POST['sort_f'] : '';
-    $sort_m = isset($_POST['sort_m']) ? $_POST['sort_m'] : '';
-    $sort = isset($_POST['sort']) ? $_POST['sort'] : '';
+    $sale_f = isset($_POST['sale_f']) ? $_POST['sale_f'] : '';
+    $sale_m = isset($_POST['sale_m']) ? $_POST['sale_m'] : '';
+    $price = isset($_POST['price']) ? $_POST['price'] : '';
+    $type = isset($_POST['type']) ? $_POST['type'] : '';
     $inputDate = isset($_POST['inputDate']) ? $_POST['inputDate'] : '';
     $currentTime = date('H:i:s');
     $currentDate = date('Y-m-d', strtotime($inputDate));
 
     // ตรวจสอบว่า id และข้อมูลอื่นๆ ถูกส่งมาอย่างถูกต้อง
-    if (!empty($id) && !empty($farm) && !empty($coop) && !empty($sort_f) && !empty($sort_m) && !empty($sort) && !empty($inputDate)) {
+    if (!empty($id)) {
 
         // SQL สำหรับอัปเดตข้อมูลในตาราง
-        $sql = "UPDATE Chickensort SET 
+        $sql = "UPDATE Sale SET 
                     FarmID = :farm, 
                     CoopID = :coop, 
-                    sortF = :sort_f, 
-                    sortM = :sort_m, 
-                    sortTypeID = :sort, 
-                    sortDate = :currentDate,
-                    sortTime = :currentTime
-                WHERE ChickenID = :id";
+                    SaleF = :sale_f, 
+                    SaleM = :sale_m,
+                    SalePrice = :price, 
+                    SaleTypeID = :saletype, 
+                    SaleDate = :currentDate,
+                    SaleTime = :currentTime
+                WHERE SaleID = :id";
 
         // เตรียม statement
         $stmt = $conn->prepare($sql);
@@ -42,9 +44,10 @@ try {
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->bindParam(':farm', $farm, PDO::PARAM_STR);
         $stmt->bindParam(':coop', $coop, PDO::PARAM_STR);
-        $stmt->bindParam(':sort_f', $sort_f, PDO::PARAM_INT);
-        $stmt->bindParam(':sort_m', $sort_m, PDO::PARAM_INT);
-        $stmt->bindParam(':sort', $sort, PDO::PARAM_STR);
+        $stmt->bindParam(':sale_f', $sale_f, PDO::PARAM_INT);
+        $stmt->bindParam(':sale_m', $sale_m, PDO::PARAM_INT);
+        $stmt->bindParam(':price', $price, PDO::PARAM_STR);
+        $stmt->bindParam(':saletype', $type, PDO::PARAM_STR);
         $stmt->bindParam(':currentDate', $currentDate, PDO::PARAM_STR);
         $stmt->bindParam(':currentTime', $currentTime, PDO::PARAM_STR);
 

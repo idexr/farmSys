@@ -30,7 +30,7 @@
             'totalCK' => $totalCK['totalCK'],
             'totalD' => $totalD['totalD'],
             'totalS' => $totalS['totalS'],
-            'difference' => ($totalCK['totalCK'] - $totalD['totalD']) - $totalS['totalS'],
+            'difference' => $totalCK['totalCK'] - ($totalD['totalD'] + $totalS['totalS']),
             'perD' => ($totalD['totalD']/$totalCK['totalCK'])*100
         ];
 

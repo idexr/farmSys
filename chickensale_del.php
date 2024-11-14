@@ -9,7 +9,7 @@
 
         if (!empty($id)) {    
             // สร้างคำสั่ง SQL เพื่อลบข้อมูลที่มี ID ตรงกับที่ส่งมา
-            $sql = "DELETE FROM Sort WHERE SortID = :id";
+            $sql = "DELETE FROM Sale WHERE SaleID = :id";
             $stmt = $conn->prepare($sql);
 
             // ผูกค่า ID เข้ากับ statement

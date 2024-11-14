@@ -8,12 +8,12 @@
         
         $sql = "SELECT Chicken.FarmID, 
                     Coop.CoopName, 
-                    SUM(Chicken.ChickenF) AS ChickenF, 
-                    SUM(Chicken.ChickenM) AS ChickenM, 
-                    SUM(COALESCE(Dead.DeadF, 0)) AS DeadF, 
-                    SUM(COALESCE(Dead.DeadM, 0)) AS DeadM, 
-                    SUM(COALESCE(Sort.SortF, 0)) AS SortF, 
-                    SUM(COALESCE(Sort.SortM, 0)) AS SortM 
+                    SUM(DISTINCT COALESCE(Chicken.ChickenF, 0)) AS ChickenF, 
+                    SUM(DISTINCT COALESCE(Chicken.ChickenM, 0)) AS ChickenM,
+                    SUM(DISTINCT COALESCE(Dead.DeadF, 0)) AS DeadF, 
+                    SUM(DISTINCT COALESCE(Dead.DeadM, 0)) AS DeadM, 
+                    SUM(DISTINCT COALESCE(Sort.SortF, 0)) AS SortF, 
+                    SUM(DISTINCT COALESCE(Sort.SortM, 0)) AS SortM 
                 FROM Chicken 
                 LEFT JOIN Coop ON Chicken.CoopID = Coop.CoopID 
                 LEFT JOIN Dead ON Chicken.FarmID = Dead.FarmID AND Chicken.CoopID = Dead.CoopID 
